@@ -20,7 +20,7 @@ interface Book {
   template: `
     <div class="edit-container card p-3" *ngIf="book">
       <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2 class="h4 mb-0">Edit Book</h2>
+        <h2 class="h4 mb-0">{{ isNew ? 'Create Book' : 'Edit Book' }}</h2>
         <a class="btn btn-outline-light btn-sm" routerLink="/books">Back to grid</a>
       </div>
       <form (ngSubmit)="save()">
@@ -62,6 +62,7 @@ interface Book {
 })
 export class BookEditComponent implements OnInit {
   book: Book | null = null;
+  isNew = false;
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) {}
 
@@ -69,15 +70,31 @@ export class BookEditComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.http.get<Book>(`/api/books/${id}`).subscribe({ next: b => this.book = b, error: () => this.book = null });
+    } else {
+      this.isNew = true;
+      this.book = {
+        title: '',
+        author: '',
+        description: '',
+        publishYear: new Date().getFullYear(),
+        isbn: ''
+      };
     }
   }
 
   save() {
-    if (!this.book || !this.book.id) return;
-    this.http.put<Book>(`/api/books/${this.book.id}`, this.book).subscribe({
-      next: () => this.router.navigate(['/books']),
-      error: () => alert('Failed to save')
-    });
+    if (!this.book) return;
+    if (this.isNew) {
+      this.http.post<Book>('/api/books', this.book).subscribe({
+        next: () => this.router.navigate(['/books']),
+        error: () => alert('Failed to create book')
+      });
+    } else if (this.book.id) {
+      this.http.put<Book>(`/api/books/${this.book.id}`, this.book).subscribe({
+        next: () => this.router.navigate(['/books']),
+        error: () => alert('Failed to save')
+      });
+    }
   }
 
   cancel() {
