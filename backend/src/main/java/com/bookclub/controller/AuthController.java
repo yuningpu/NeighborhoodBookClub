@@ -1,5 +1,6 @@
 package com.bookclub.controller;
 
+import com.bookclub.model.Role;
 import com.bookclub.service.AuthService;
 import com.bookclub.service.UserService;
 import lombok.Data;
@@ -8,9 +9,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*")
 public class AuthController {
 
     @Autowired
@@ -22,7 +26,12 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest request) {
         return authService.login(request.getUsername(), request.getPassword())
-                .map(token -> ResponseEntity.ok(new AuthResponse(token, request.getUsername())))
+                .map(token -> {
+                    List<String> roles = userService.findByUsername(request.getUsername())
+                            .map(user -> user.getUserRoles().stream().map(userRole -> userRole.getRole()).map(Role::getName).collect(Collectors.toList()))
+                            .orElse(List.of("MEMBER"));
+                    return ResponseEntity.ok(new AuthResponse(token, request.getUsername(), roles));
+                })
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
     }
 
@@ -34,8 +43,13 @@ public class AuthController {
         }
         userService.createUser(request.getUsername(), request.getPassword());
         return authService.login(request.getUsername(), request.getPassword())
-                .map(token -> ResponseEntity.status(HttpStatus.CREATED).body(new AuthResponse(token, request.getUsername())))
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());
+            .map(token -> {
+                List<String> roles = userService.findByUsername(request.getUsername())
+                        .map(user -> user.getUserRoles().stream().map(userRole -> userRole.getRole()).map(Role::getName).collect(Collectors.toList()))
+                        .orElse(List.of("MEMBER"));
+                return ResponseEntity.status(HttpStatus.CREATED).body(new AuthResponse(token, request.getUsername(), roles));
+            })
+            .orElseGet(() -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());
     }
 
     @Data
@@ -48,6 +62,7 @@ public class AuthController {
     public static class AuthResponse {
         private final String token;
         private final String username;
+        private final List<String> roles;
     }
 
     @Data

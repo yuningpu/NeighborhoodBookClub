@@ -1,3 +1,17 @@
+-- Insert roles
+INSERT INTO roles (name) VALUES ('ADMIN');
+INSERT INTO roles (name) VALUES ('MEMBER');
+
+-- Insert admin2 user
+INSERT INTO app_users (username, password_hash, password) VALUES 
+('admin2', '$2a$10$slYQmyNdGzin7olVN3p5be4DlH.PKZbv5H8KnzzVgXXbVxzy990P2', 'password123');
+
+-- Assign admin2 to both ADMIN and MEMBER roles
+INSERT INTO user_roles (user_id, role_id) VALUES 
+((SELECT id FROM app_users WHERE username = 'admin2'), (SELECT id FROM roles WHERE name = 'ADMIN')),
+((SELECT id FROM app_users WHERE username = 'admin2'), (SELECT id FROM roles WHERE name = 'MEMBER'));
+
+-- Insert books
 INSERT INTO books (title, author, description, publish_year, isbn, created_at, updated_at) VALUES
 ('Pride and Prejudice', 'Jane Austen', 'A classic novel of manners.', 1813, '9780141199078', CURRENT_DATE, CURRENT_DATE),
 ('1984', 'George Orwell', 'Dystopian social science fiction novel.', 1949, '9780451524935', CURRENT_DATE, CURRENT_DATE),

@@ -1,12 +1,13 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">Neighborhood Book Club</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain" aria-controls="navMain" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" aria-controls="navMain" aria-expanded="false" aria-label="Toggle navigation" (click)="menuOpen = !menuOpen">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navMain">
+    <div class="collapse navbar-collapse" id="navMain" [class.show]="menuOpen">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item"><a class="nav-link" routerLink="/books">Books</a></li>
+        <li *ngIf="isAdmin" class="nav-item"><a class="nav-link" routerLink="/memberships">Memberships</a></li>
       </ul>
       <div class="d-flex align-items-center gap-2">
         <button class="btn btn-outline-light btn-sm" (click)="toggleTheme()" title="Toggle dark/light">
