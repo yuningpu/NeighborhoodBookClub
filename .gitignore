@@ -1,0 +1,47 @@
+# OS files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Node / Angular
+/frontend/node_modules/
+/frontend/dist/
+/frontend/out-tsc/
+/frontend/*.log
+/frontend/*.tgz
+/frontend/*.temp
+
+# Java / Maven
+/backend/target/
+/backend/.mvn/wrapper/maven-wrapper.jar
+/backend/*.log
+**/*.class
+**/*.jar
+**/*.war
+**/*.ear
+/backend/tools/
+
+# IDEs and editors
+/.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Generated files
+*.tmp
+*.temp
+*.swp
+*~
+
+# H2 database files
+*.db
+*.mv.db
+*.trace.db
