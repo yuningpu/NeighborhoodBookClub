@@ -8,6 +8,12 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item"><a class="nav-link" routerLink="/books">Books</a></li>
       </ul>
+      <div class="d-flex align-items-center">
+        <button class="btn btn-outline-light btn-sm" (click)="toggleTheme()" title="Toggle dark/light">
+          <span *ngIf="isDark">🌙 Dark</span>
+          <span *ngIf="!isDark">☀️ Light</span>
+        </button>
+      </div>
     </div>
   </div>
 </nav>

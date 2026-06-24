@@ -1,14 +1,57 @@
-/* Global styles and simple theming */
-body {
-	font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-	background: #f5f7fb;
-	color: #111827;
+/* Global styles and refined theming with CSS variables */
+:root {
+	--bg: linear-gradient(180deg, #f7fbff 0%, #f1f5f9 100%);
+	--page-bg-color: #f5f7fb;
+	--text-color: #0f172a;
+	--muted: #6b7280;
+	--card-bg: #ffffff;
+	--primary-shadow: rgba(59,130,246,0.12);
+	--navbar-bg: #0d6efd;
 }
 
-.navbar-brand { font-weight: 600; }
+.dark {
+	--bg: linear-gradient(180deg, #071226 0%, #061223 100%);
+	--page-bg-color: #071226;
+	--text-color: #e6eef8;
+	--muted: #9aa6b2;
+	--card-bg: #0b1a2a;
+	--primary-shadow: rgba(0,0,0,0.35);
+	--navbar-bg: #0b1220;
+}
+
+body {
+	font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+	background: var(--bg);
+	color: var(--text-color);
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.navbar { box-shadow: 0 2px 6px rgba(15,23,42,0.06); background-color: var(--navbar-bg) !important; }
+.navbar-brand { font-weight: 700; letter-spacing: 0.2px; }
 
 .container { max-width: 1100px; }
 
-/* Utility tweaks */
-.card { border-radius: .6rem; }
+/* Cards and table styling */
+.card { border-radius: 0.6rem; background: var(--card-bg); box-shadow: 0 6px 18px rgba(15,23,42,0.06); color: var(--text-color); }
+.table thead th { border-bottom-width: 2px; color: var(--muted); }
+.table tbody tr { background: var(--card-bg); }
+
+/* Buttons */
+.btn-primary { box-shadow: 0 6px 12px var(--primary-shadow); border-radius: .5rem; padding: .5rem .9rem; }
+.btn-outline-secondary { border-radius: .5rem; padding: .45rem .85rem; }
+
+/* Responsive tweaks */
+@media (max-width: 720px) {
+	.table-responsive { font-size: 0.95rem; }
+	.card { padding: .6rem; }
+}
+
+/* Form tweaks */
+.form-control { border-radius: .45rem; }
+
+/* Subtle list header */
+.page-header { margin: 1.2rem 0; display:flex; align-items:center; justify-content:space-between; }
+.page-title { margin: 0; font-size: 1.25rem; font-weight:600; }
+
 
