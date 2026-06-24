@@ -8,11 +8,14 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item"><a class="nav-link" routerLink="/books">Books</a></li>
       </ul>
-      <div class="d-flex align-items-center">
+      <div class="d-flex align-items-center gap-2">
         <button class="btn btn-outline-light btn-sm" (click)="toggleTheme()" title="Toggle dark/light">
           <span *ngIf="isDark">🌙 Dark</span>
           <span *ngIf="!isDark">☀️ Light</span>
         </button>
+        <button *ngIf="isLoggedIn" class="btn btn-outline-light btn-sm" (click)="logout()">Logout</button>
+        <a *ngIf="!isLoggedIn" class="btn btn-outline-light btn-sm" routerLink="/login">Login</a>
+        <a *ngIf="!isLoggedIn" class="btn btn-outline-light btn-sm" routerLink="/signup">Sign up</a>
       </div>
     </div>
   </div>
