@@ -18,17 +18,34 @@ interface Book {
   standalone: true,
   imports: [CommonModule, FormsModule, HttpClientModule, RouterModule],
   template: `
-    <div class="edit-container" *ngIf="book">
-      <h2>Edit Book</h2>
+    <div class="edit-container card p-3" *ngIf="book">
+      <h2 class="h4 mb-3">Edit Book</h2>
       <form (ngSubmit)="save()">
-        <label>Title<br /><input name="title" [(ngModel)]="book.title" required /></label>
-        <label>Author<br /><input name="author" [(ngModel)]="book.author" required /></label>
-        <label>Year<br /><input name="publishYear" type="number" [(ngModel)]="book.publishYear" /></label>
-        <label>ISBN<br /><input name="isbn" [(ngModel)]="book.isbn" /></label>
-        <label>Description<br /><textarea name="description" [(ngModel)]="book.description"></textarea></label>
-        <div style="margin-top:0.5rem">
-          <button type="submit">Save</button>
-          <button type="button" (click)="cancel()">Cancel</button>
+        <div class="mb-2">
+          <label class="form-label">Title</label>
+          <input class="form-control" name="title" [(ngModel)]="book.title" required />
+        </div>
+        <div class="mb-2">
+          <label class="form-label">Author</label>
+          <input class="form-control" name="author" [(ngModel)]="book.author" required />
+        </div>
+        <div class="row">
+          <div class="col-md-4 mb-2">
+            <label class="form-label">Year</label>
+            <input class="form-control" name="publishYear" type="number" [(ngModel)]="book.publishYear" />
+          </div>
+          <div class="col-md-8 mb-2">
+            <label class="form-label">ISBN</label>
+            <input class="form-control" name="isbn" [(ngModel)]="book.isbn" />
+          </div>
+        </div>
+        <div class="mb-2">
+          <label class="form-label">Description</label>
+          <textarea class="form-control" rows="4" name="description" [(ngModel)]="book.description"></textarea>
+        </div>
+        <div class="mt-3">
+          <button class="btn btn-primary me-2" type="submit">Save</button>
+          <button class="btn btn-outline-secondary" type="button" (click)="cancel()">Cancel</button>
         </div>
       </form>
     </div>
@@ -36,10 +53,7 @@ interface Book {
   `,
   styles: [
     `
-    .edit-container { max-width: 700px; margin: 1rem auto; }
-    label { display:block; margin:0.5rem 0; }
-    input, textarea { width:100%; padding:0.35rem; }
-    button { margin-right:0.5rem; }
+    .edit-container { max-width: 900px; margin: 0 auto; font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
     `
   ]
 })
