@@ -19,7 +19,10 @@ interface Book {
   imports: [CommonModule, FormsModule, HttpClientModule, RouterModule],
   template: `
     <div class="edit-container card p-3" *ngIf="book">
-      <h2 class="h4 mb-3">Edit Book</h2>
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="h4 mb-0">Edit Book</h2>
+        <a class="btn btn-outline-light btn-sm" routerLink="/books">Back to grid</a>
+      </div>
       <form (ngSubmit)="save()">
         <div class="mb-2">
           <label class="form-label">Title</label>
